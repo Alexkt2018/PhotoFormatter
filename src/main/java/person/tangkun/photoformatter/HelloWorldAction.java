@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2025 by Tang Kun. All rights reserved.
+ */
+
+package person.tangkun.photoformatter;
+
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
@@ -25,5 +31,9 @@ public class HelloWorldAction extends AnAction {
         }
         String title = "Hello World!";
         Messages.showMessageDialog(project, classPath, title, Messages.getInformationIcon());
+
+        if (classPath != null && classPath.endsWith(".jpg")) {
+            FormatConvertUtil.jpg2webp(classPath, classPath.replace(".jpg", ".webp"));
+        }
     }
 }

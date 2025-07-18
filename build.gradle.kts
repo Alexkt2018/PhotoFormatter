@@ -24,6 +24,8 @@ dependencies {
     // Add necessary plugin dependencies for compilation here, example:
     // bundledPlugin("com.intellij.java")
   }
+
+  implementation("org.sejda.imageio:webp-imageio:0.1.6")
 }
 
 intellijPlatform {
