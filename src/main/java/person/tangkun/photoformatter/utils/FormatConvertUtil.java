@@ -2,7 +2,7 @@
  * Copyright (c) 2025 by Tang Kun. All rights reserved.
  */
 
-package person.tangkun.photoformatter;import java.awt.image.BufferedImage;
+package person.tangkun.photoformatter.utils;import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

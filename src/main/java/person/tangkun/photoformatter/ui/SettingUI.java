@@ -2,7 +2,7 @@
  * Copyright (c) 2025 by Tang Kun. All rights reserved.
  */
 
-package person.tangkun.photoformatter;
+package person.tangkun.photoformatter.ui;
 
 import javax.swing.*;
 

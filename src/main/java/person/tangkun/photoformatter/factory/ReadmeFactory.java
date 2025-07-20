@@ -10,7 +10,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
-import person.tangkun.photoformatter.ReadmeUI;
+import person.tangkun.photoformatter.ui.ReadmeUI;
 
 public class ReadmeFactory implements ToolWindowFactory {
 
@@ -27,5 +27,4 @@ public class ReadmeFactory implements ToolWindowFactory {
         // 全局使用
         // Config.readUI = readUI;
     }
-
 }

@@ -8,7 +8,7 @@ import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import person.tangkun.photoformatter.SettingUI;
+import person.tangkun.photoformatter.ui.SettingUI;
 
 import javax.swing.*;
 
@@ -39,7 +39,6 @@ public class SettingFactory implements SearchableConfigurable {
     @Override
     public void apply() {
     }
-
 }
 
 

@@ -30,12 +30,13 @@
                 factoryClass="person.tangkun.photoformatter.factory.ReadmeFactory"/>
   </extensions>
     <actions>
-        <action id="HelloWorld" class="person.tangkun.photoformatter.HelloWorldAction" text="Hello World！" description="Hello World">
-          <!-- 添加到编辑器菜单的第一项 -->
-          <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-
+      <group id="EditorActionGroup" text="EditorActionGroup" description="EditorActionGroup" popup="true">
+        <!-- 添加到编辑器菜单的第一项 -->
+        <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        <action id="PhotoFormat" class="person.tangkun.photoformatter.actions.HelloWorldAction" text="Photo Format" description="Photo format">
           <!-- 可通过 ctrl + H 快捷键触发 -->
           <keyboard-shortcut keymap="$default" first-keystroke="ctrl H"/>
         </action>
+      </group>
     </actions>
 </idea-plugin>
