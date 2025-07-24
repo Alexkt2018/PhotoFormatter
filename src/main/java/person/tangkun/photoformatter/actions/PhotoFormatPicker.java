@@ -7,7 +7,9 @@ package person.tangkun.photoformatter.actions;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.ui.CommonActionsPanel;
+import com.intellij.ui.components.JBScrollPane;
 import org.jetbrains.annotations.NotNull;
+import person.tangkun.photoformatter.utils.FormatConvertUtil;
 import person.tangkun.photoformatter.utils.LogUtil;
 
 import javax.swing.*;
@@ -16,6 +18,10 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -25,19 +31,48 @@ public class PhotoFormatPicker extends JPanel {
     private int selectedIndex = 0;
     private int jpegSliderPercent = 0;
     private int webpSliderPercent = 0;
+    private String filePath = "";
 
     public PhotoFormatPicker(List<? extends CommonActionsPanel.Listener> listeners) {
         super();
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         try {
-            add(buildPanel(), BorderLayout.NORTH);
+            add(buildFilePanel(), BorderLayout.NORTH);
+            add(buildPanel(), BorderLayout.SOUTH);
         } catch (ParseException e) {
             LogUtil.e(TAG, "ParseException" + e);
         }
 
         setSize(300, 350);
         myExternalListeners = listeners;
+    }
+
+    private JComponent buildFilePanel() throws ParseException {
+        final JPanel result = new JPanel(new BorderLayout());
+        JTextArea textArea = new JTextArea();
+        JBScrollPane scrollPane = new JBScrollPane(textArea);
+        JButton jpegButton = new JButton("打开文件");
+
+        jpegButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String line = selectedFile.getAbsolutePath();
+                    textArea.setText(line);
+                    filePath = line;
+                    LogUtil.i(TAG, "filePath: " + filePath);
+                }
+            }
+        });
+
+        result.add(scrollPane, BorderLayout.CENTER);
+        result.add(jpegButton, BorderLayout.EAST);
+        return result;
     }
 
     private JComponent buildPanel() throws ParseException {
@@ -153,6 +188,16 @@ public class PhotoFormatPicker extends JPanel {
         @Override
         protected void doOKAction() {
             super.doOKAction();
+            if  (myPhotoFormatPicker == null) {
+                LogUtil.w(TAG, "myPhotoFormatPicker is null");
+                return;
+            }
+            if (myPhotoFormatPicker.filePath.endsWith(".jpg")) {
+                FormatConvertUtil.jpg2webp(myPhotoFormatPicker.filePath, myPhotoFormatPicker.filePath.replace(".jpg", ".webp"));
+            }
+            if (myPhotoFormatPicker.filePath.endsWith(".webp")) {
+                FormatConvertUtil.webp2jpg(myPhotoFormatPicker.filePath, myPhotoFormatPicker.filePath.replace(".webp", ".jpg"));
+            }
         }
 
         @Override

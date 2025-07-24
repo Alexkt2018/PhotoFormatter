@@ -47,7 +47,6 @@ public class FormatConvertUtil {
      * webp格式图片转成JPG格式
      * @param oldfile	c:/1.test.webp
      * @param newfile	c:/1.test.jpg
-     * @return
      */
     public static void webp2jpg(String oldfile, String newfile){
         // 创建WebP ImageReader实例
@@ -74,10 +73,9 @@ public class FormatConvertUtil {
      * JPG格式图片转成webp格式(也可以是其他格式图片)
      * @param oldfile	c:/1.test.jpg
      * @param newfile	c:/1.test.webp
-     * @return
+     * @param quality   0-100
      */
-    public static void jpg2webp(String oldfile, String newfile){
-
+    public static void jpg2webp(String oldfile, String newfile, int quality) {
         try {
             // 获取原始文件的编码
             BufferedImage image = ImageIO.read(new File(oldfile));
@@ -86,7 +84,8 @@ public class FormatConvertUtil {
             // 配置编码参数
             WebPWriteParam writeParam = new WebPWriteParam(writer.getLocale());
             // 设置压缩模式
-            writeParam.setCompressionMode(WebPWriteParam.MODE_DEFAULT);
+            writeParam.setCompressionMode(WebPWriteParam.LOSSY_COMPRESSION);
+            writeParam.setCompressionQuality((float) quality / 100);
             // 配置ImageWriter输出
             writer.setOutput(new FileImageOutputStream(new File(newfile)));
             // 进行编码，重新生成新图片
@@ -96,7 +95,15 @@ public class FormatConvertUtil {
             LogUtil.e(TAG, "FileNotFoundException: " + e);
         } catch (IOException e) {
             LogUtil.e(TAG, "IOException: " + e);
-
         }
+    }
+
+    /**
+     * JPG格式图片转成webp格式(也可以是其他格式图片)
+     * @param oldfile	c:/1.test.jpg
+     * @param newfile	c:/1.test.webp
+     */
+    public static void jpg2webp(String oldfile, String newfile) {
+        jpg2webp(oldfile, newfile, 100);
     }
 }
